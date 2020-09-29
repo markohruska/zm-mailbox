@@ -48,14 +48,8 @@ public class ResetPassword extends AccountDocumentHandler {
 
         AuthToken at = zsc.getAuthToken();
         AuthProvider.validateAuthToken(prov, at, false);
-        
-        String text = request.getAttribute(AccountConstants.E_DRYRUN, null);
-        boolean dryRun = false;
-        if (!StringUtil.isNullOrEmpty(text)) {
-            if (text.equals("1") || text.equalsIgnoreCase("true")) {
-                dryRun = true;
-            }
-        }
+
+        boolean dryRun = request.getAttributeBool(AccountConstants.E_DRYRUN, false);
 
         Account acct = at.getAccount();
         boolean locked = acct.getBooleanAttr(Provisioning.A_zimbraPasswordLocked, false);
